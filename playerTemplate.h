@@ -6,6 +6,8 @@
 #define NJ_NS_PROJECT4_PLAYERTEMPLATE_H
 
 #include <vector>
+#include <iostream>
+#include <string>
 
 template<typename T>
 class PlayerTemplate{
@@ -15,7 +17,14 @@ public:
 
     PlayerTemplate();
 
-    int find(); //noah
+    int find(std::string pName){
+        for(int i = 0; i < fVec.size(); ++i){
+            if(fVec[i].getName() == pName){
+                return i;
+            }
+        }
+    }
+
     void sort(); //nolan
 
     void randomizeNS();
