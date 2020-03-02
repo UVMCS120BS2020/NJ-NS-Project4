@@ -6,6 +6,7 @@
 #define NJ_NS_PROJECT4_PLAYERTEMPLATE_H
 
 #include <vector>
+#include <iostream>
 
 template<typename T>
 class PlayerTemplate{
@@ -16,7 +17,9 @@ public:
     PlayerTemplate();
 
     int find(); //noah
-    void sort(); //nolan
+
+    //nolan
+    void sort();
 
     void randomizeNS();
     void randomizeNJ();
