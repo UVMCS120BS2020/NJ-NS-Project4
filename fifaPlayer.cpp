@@ -15,7 +15,7 @@ void FifaPlayer::setName(string pName){
     fName = pName;
 }
 
-string FifaPlayer::getName(){
+string FifaPlayer::getName() const{
     return fName;
 }
 
@@ -23,7 +23,7 @@ void FifaPlayer::setRating(double pRating){
     fRating = pRating;
 }
 
-double FifaPlayer::getRating(){
+double FifaPlayer::getRating() const{
     return fRating;
 }
 
@@ -41,4 +41,15 @@ void FifaPlayer::addManOfMatch(){
         fRating += 0;
 }
 
-std::ostream& operator << (std::ostream& outs, const FifaPlayer &p);
+ostream& operator << (std::ostream& outs, const FifaPlayer &p){
+    outs << "NAME: " << p.getName() << "  RATING: " << p.getRating();
+    return outs;
+}
+
+bool operator < (FifaPlayer &lhs, FifaPlayer &rhs){
+    return (lhs.getRating() < rhs.getRating());
+}
+
+bool operator > (FifaPlayer &lhs, FifaPlayer &rhs){
+    return (lhs.getRating() > rhs.getRating());
+}

@@ -25,7 +25,19 @@ public:
         }
     }
 
-    void sort(); //nolan
+    //nolan
+    void sort(){
+        int lastIndex = fVec.size() - 1;
+        T temp;
+        for(int i = 0; i < lastIndex ; i++){
+            if (fVec[i] > fVec[i+1]){
+                temp = fVec[i];
+                fVec[i] = fVec[i+1];
+                fVec[i+1] = temp;
+            }
+            --lastIndex;
+        }
+    }
 
     void randomizeNS();
     void randomizeNJ();
@@ -33,7 +45,12 @@ public:
     void setVector(std::vector<T> pVec); //noah
     std::vector<T> getVector(); //noah
 
-    friend std::ostream& operator << (std::ostream& outs, std::vector<T> &pVec); //nolan
+    friend std::ostream& operator << (std::ostream& outs, std::vector<T> &pVec){ //nolan
+        for(auto i : pVec){
+            outs << pVec[i] << "\n";
+        }
+        return outs;
+    }
 };
 
 #endif //NJ_NS_PROJECT4_PLAYERTEMPLATE_H
