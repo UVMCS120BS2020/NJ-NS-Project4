@@ -16,6 +16,8 @@ private:
 public:
     FifaPlayer(std::string pName, double pRating);
 
+    FifaPlayer(const FifaPlayer& pPlayer);
+
     void setName(std::string pName);
 
     std::string getName() const;

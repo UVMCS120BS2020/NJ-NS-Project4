@@ -11,6 +11,11 @@ FifaPlayer::FifaPlayer(string pName, double pRating){
     fRating = pRating;
 }
 
+FifaPlayer::FifaPlayer(const FifaPlayer& pPlayer){
+    fName = pPlayer.getName();
+    fRating = pPlayer.getRating();
+}
+
 void FifaPlayer::setName(string pName){
     fName = pName;
 }
