@@ -65,7 +65,7 @@ public:
         return fVec;
     }
 
-    friend std::ostream& operator << (std::ostream& outs, PlayerTemplate<T> playerTemplate){ //nolan TODO: THIS STILL HAS TO BE FIGURED OUT
+    friend std::ostream& operator << (std::ostream& outs, PlayerTemplate<T> playerTemplate){ //nolan
         std::vector<T> templateVec = playerTemplate.getVector();
         for(auto i : templateVec)
             outs << "NAME: " << i.getName() << "  RATING: " << i.getRating() << "\n";
