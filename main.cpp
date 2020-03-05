@@ -4,15 +4,11 @@
 
 #include "fifaPlayer.h"
 #include "playerTemplate.h"
-#include <ctime>
 #include <iostream>
 #include <vector>
 using namespace std;
 
 int main() {
-    //time_t currentTime;
-    //currentTime = time(NULL);
-    //cout << abs((currentTime*1000) % 19) << endl;
 
     FifaPlayer p1 = FifaPlayer("Lionel Messi", 94);
     FifaPlayer p2 = FifaPlayer("Christiano Ronaldo", 92);
@@ -29,17 +25,17 @@ int main() {
 
     PlayerTemplate<FifaPlayer> myThing;
     myThing.setVector(playerVec);
-    for (auto i : myThing.getVector())
-        cout << i << endl;
+
+    cout << myThing.find("Bruno Fernandes") << endl;
+
+    cout << myThing << endl;
     cout << "\n" << endl;
     myThing.sort();
-    for (auto i : myThing.getVector())
-        cout << i << endl;
+    cout << myThing << endl;
     cout << "\n" << endl;
 
     myThing.randomizeNJ();
-    for (auto i : myThing.getVector())
-        cout << i << endl;
+    cout << myThing << endl;
 
     return 0;
 

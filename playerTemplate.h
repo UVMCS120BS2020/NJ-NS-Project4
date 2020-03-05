@@ -9,6 +9,7 @@
 #include <iostream>
 #include <string>
 #include <ctime>
+#include <random>
 
 template<typename T>
 class PlayerTemplate{
@@ -24,6 +25,7 @@ public:
                 return i;
             }
         }
+        return -1;
     }
 
     //nolan
@@ -47,10 +49,9 @@ public:
         int tempIndex;
         int swapIndex;
         for(auto i : fVec){
-            currentTime = time(NULL);
-            tempIndex = abs(currentTime*1000) % (fVec.size()-1);
+            tempIndex = rand() % (fVec.size()-1);
+            swapIndex = rand() % (fVec.size()-1);
             T temp = fVec[tempIndex];
-            swapIndex = abs(currentTime*1000) % (fVec.size()-1);
             fVec[tempIndex] = fVec[swapIndex];
             fVec[swapIndex] = temp;
         }
@@ -64,10 +65,10 @@ public:
         return fVec;
     }
 
-    friend std::ostream& operator << (std::ostream& outs, std::vector<T> pVec){ //nolan TODO: THIS STILL HAS TO BE FIGURED OUT
-        for(auto i : pVec){
-            outs << pVec[i] << "\n";
-        }
+    friend std::ostream& operator << (std::ostream& outs, PlayerTemplate<T> playerTemplate){ //nolan TODO: THIS STILL HAS TO BE FIGURED OUT
+        std::vector<T> templateVec = playerTemplate.getVector();
+        for(auto i : templateVec)
+            outs << "NAME: " << i.getName() << "  RATING: " << i.getRating() << "\n";
         return outs;
     }
 };
