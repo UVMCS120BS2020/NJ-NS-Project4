@@ -10,6 +10,7 @@
 #include <string>
 #include <ctime>
 #include <random>
+#include <chrono>
 
 template<typename T>
 class PlayerTemplate{
@@ -19,6 +20,7 @@ public:
 
     PlayerTemplate()= default;
 
+    // finds the name of the player in the fVec and returns the index it is at.
     int find(std::string pName){
         for(int i = 0; i < fVec.size(); ++i){
             if(fVec[i].getName() == pName){
@@ -28,7 +30,7 @@ public:
         return -1;
     }
 
-    //nolan
+    // Sorts fVec by rating
     void sort(){
         int lastIndex = fVec.size() - 1;
         for(int k = 0; k < lastIndex-1; k++) {
@@ -42,8 +44,24 @@ public:
         }
     }
 
-    void randomizeNS();
+    // uses chrono time in different metrics to create a 'random' number then swaps with a 'random' index
+    void randomizeNS(){
+        auto moment = std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+        int tempIndex;
+        int swapIndex;
+        auto moment2 = std::chrono::duration_cast<std::chrono::milliseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+        for(auto i : fVec){
+            moment *= std::chrono::duration_cast<std::chrono::microseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            moment2 *= std::chrono::duration_cast<std::chrono::nanoseconds>(std::chrono::high_resolution_clock::now().time_since_epoch()).count();
+            tempIndex = moment % (fVec.size()-1);
+            swapIndex = moment2 % (fVec.size()-1);
+            T temp = fVec[tempIndex];
+            fVec[tempIndex] = fVec[swapIndex];
+            fVec[swapIndex] = temp;
+        }
+    }
 
+    // uses srand to create a sudo random number then swaps with a sudo random index
     void randomizeNJ(){
         time_t currentTime;
         srand(time(0));
@@ -58,11 +76,13 @@ public:
         }
     }
 
-    void setVector(std::vector<T> pVec){ //nolan
+    // takes a vector of template and sets fVec to the given vector
+    void setVector(std::vector<T> pVec){
         fVec = pVec;
     }
 
-    std::vector<T> getVector(){ //nolan
+    // returns fVec
+    std::vector<T> getVector(){
         return fVec;
     }
 

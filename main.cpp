@@ -29,6 +29,8 @@ int main() {
     }
     myThing.setVector(playerVec);
 
+    cout << "The find function found player 'p10' at index: " << myThing.find("p10") << endl;
+
     //Testing the output operator and sort function
     cout << "Original Creation of Vector" << endl;
     cout << myThing << endl;
@@ -38,13 +40,18 @@ int main() {
     cout << "Vector after sorting function is called" << endl;
     cout << myThing << endl;
     cout << "\n" << endl;
-
     //Testing the randomness metric
     int rInt = testRandomnessNolan(myThing);
     cout << rInt << endl;
     double rRatio = double(rInt)/(5000); //There are 50 indices in each vector, 100 vectors per trial, so there are 5000 possible equal vectors
     cout << "The randomness metric ratio is: " << rRatio << endl;
     cout << "This means that %" << rRatio*100 << " of trials were identical after put through Nolan's randomizer" << endl;
+
+    rInt = testRandomnessNoah(myThing);
+    cout << rInt << endl;
+    rRatio = double(rInt)/(5000); //There are 50 indices in each vector, 100 vectors per trial, so there are 5000 possible equal vectors
+    cout << "The randomness metric ratio is: " << rRatio << endl;
+    cout << "This means that " << rRatio*100 << "% of trials were identical after put through Noah's randomizer" << endl;
 
     return 0;
 
@@ -74,7 +81,7 @@ int testRandomnessNoah (PlayerTemplate<FifaPlayer> &templateObject){
     vector<vector<FifaPlayer>> vecOfVecs;
 
     for(int i = 0; i < NUM_TRIALS ++i){
-        //templateObject.randomizeNS();      TODO NOAH you are just going to have to uncomment this when you do your randomizer
+        templateObject.randomizeNS();
         vecOfVecs.push_back(templateObject.getVector());
     }
 
@@ -82,8 +89,9 @@ int testRandomnessNoah (PlayerTemplate<FifaPlayer> &templateObject){
 
     for(int k = 0; k < vecOfVecs.size()-1; ++k){
         for(int j = k; j < vecOfVecs.size()-1; ++j){
-            if(vecOfVecs[k] == vecOfVecs[j])
-                ++ equalInstances;
+            if(k!=j)
+                if(vecOfVecs[k] == vecOfVecs[j])
+                    ++ equalInstances;
         }
     }
     return equalInstances;
