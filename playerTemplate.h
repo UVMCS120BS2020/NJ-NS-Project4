@@ -46,6 +46,7 @@ public:
 
     void randomizeNJ(){
         time_t currentTime;
+        srand(time(0));
         int tempIndex;
         int swapIndex;
         for(auto i : fVec){

@@ -58,3 +58,7 @@ bool operator < (FifaPlayer &lhs, FifaPlayer &rhs){
 bool operator > (FifaPlayer &lhs, FifaPlayer &rhs){
     return (lhs.getRating() > rhs.getRating());
 }
+
+//bool operator == (const FifaPlayer &lhs, const FifaPlayer &rhs){
+  //  return lhs.getName() == rhs.getName() && lhs.getRating() == rhs.getRating();
+//}

@@ -6,37 +6,89 @@
 #include "playerTemplate.h"
 #include <iostream>
 #include <vector>
+#include <string>
+#include <sstream>
+
 using namespace std;
+
+#define NUM_TRIALS 100;
+
+int testRandomnessNolan(PlayerTemplate<FifaPlayer> &templateObject);
+int testRandomnessNoah(PlayerTemplate<FifaPlayer> &templateObject);
 
 int main() {
 
-    FifaPlayer p1 = FifaPlayer("Lionel Messi", 94);
-    FifaPlayer p2 = FifaPlayer("Christiano Ronaldo", 92);
-    FifaPlayer p3 = FifaPlayer("Fred", 92);
-    FifaPlayer p4 = FifaPlayer("Juan Mata", 84);
-    FifaPlayer p5 = FifaPlayer("Bruno Fernandes", 89);
-    FifaPlayer p6 = FifaPlayer("Christian Benteke", 73);
-    FifaPlayer p7 = FifaPlayer("Serge Gnabry", 62);
-    FifaPlayer p8 = FifaPlayer("Michael Bradly", 67);
-    FifaPlayer p9 = FifaPlayer("Landon Donovan", 53);
-    FifaPlayer p10 = FifaPlayer("Eden Hazard", 89);
-
-    vector<FifaPlayer> playerVec{p1,p2,p3,p4,p5,p6,p7,p8,p9,p10};
-
+    vector<FifaPlayer> playerVec;
     PlayerTemplate<FifaPlayer> myThing;
+
+    for(int i = 0; i < 50; ++i){
+        stringstream ss;
+        ss << "p";
+        ss << i;
+        playerVec.push_back(FifaPlayer(ss.str(), i));
+    }
     myThing.setVector(playerVec);
 
-    cout << myThing.find("Bruno Fernandes") << endl;
-
+    //Testing the output operator and sort function
+    cout << "Original Creation of Vector" << endl;
     cout << myThing << endl;
     cout << "\n" << endl;
+
     myThing.sort();
+    cout << "Vector after sorting function is called" << endl;
     cout << myThing << endl;
     cout << "\n" << endl;
 
-    myThing.randomizeNJ();
-    cout << myThing << endl;
+    //Testing the randomness metric
+    int rInt = testRandomnessNolan(myThing);
+    cout << rInt << endl;
+    double rRatio = double(rInt)/(5000); //There are 50 indices in each vector, 100 vectors per trial, so there are 5000 possible equal vectors
+    cout << "The randomness metric ratio is: " << rRatio << endl;
+    cout << "This means that %" << rRatio*100 << " of trials were identical after put through Nolan's randomizer" << endl;
 
     return 0;
 
+}
+
+int testRandomnessNolan (PlayerTemplate<FifaPlayer> &templateObject){
+    vector<vector<FifaPlayer>> vecOfVecs;
+
+    for(int i = 0; i < NUM_TRIALS ++i){
+        templateObject.randomizeNJ();
+        vecOfVecs.push_back(templateObject.getVector());
+    }
+
+    int equalInstances = 0;
+
+    for(int k = 0; k < vecOfVecs.size()-1; ++k){
+        for(int j = k; j < vecOfVecs.size()-1; ++j){
+            if(k!=j)
+                if(vecOfVecs[k] == vecOfVecs[j])
+                    ++ equalInstances;
+        }
+    }
+    return equalInstances;
+}
+
+int testRandomnessNoah (PlayerTemplate<FifaPlayer> &templateObject){
+    vector<vector<FifaPlayer>> vecOfVecs;
+
+    for(int i = 0; i < NUM_TRIALS ++i){
+        //templateObject.randomizeNS();      TODO NOAH you are just going to have to uncomment this when you do your randomizer
+        vecOfVecs.push_back(templateObject.getVector());
+    }
+
+    int equalInstances = 0;
+
+    for(int k = 0; k < vecOfVecs.size()-1; ++k){
+        for(int j = k; j < vecOfVecs.size()-1; ++j){
+            if(vecOfVecs[k] == vecOfVecs[j])
+                ++ equalInstances;
+        }
+    }
+    return equalInstances;
+}
+
+bool operator == (const FifaPlayer &lhs, const FifaPlayer &rhs) {
+    return lhs.getName() == rhs.getName() && lhs.getRating() == rhs.getRating();
 }

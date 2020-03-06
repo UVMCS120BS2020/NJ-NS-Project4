@@ -32,6 +32,8 @@ public:
 
     friend bool operator > (FifaPlayer &lhs, FifaPlayer &rhs);
 
+//    friend bool operator == (FifaPlayer &lhs, FifaPlayer &rhs);
+
     friend std::ostream& operator << (std::ostream& outs, const FifaPlayer &p);
 };
 
